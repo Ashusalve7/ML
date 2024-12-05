@@ -1,0 +1,12 @@
+import numpy as np
+from sklearn.metrics import mean_squared_error
+
+ground_truth = np.array([2.5, 3.5, 1.5, 1.8, 2.8])
+predicted_values = np.array([2.2,2.8, 2.9, 3.5, 1.9])
+rse =mean_squared_error(ground_truth, predicted_values)
+print("mse:", rse)
+
+from sklearn.metrics import r2_score
+
+rse =r2_score(ground_truth, predicted_values)
+print(rse)
