@@ -1,0 +1,81 @@
+#Import Libraries
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the Iris dataset
+iris = load_iris()
+
+# Create a DataFrame
+data = pd.DataFrame(data = iris.data, columns = iris.feature_names)
+data['target'] = iris.target
+
+# Display the first few rows of the DataFrame
+print(data.head())
+
+#Define features and target
+X = data.drop('target', axis = 1)
+y = data['target']
+
+#Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42)
+print("Training set shape:", X_train.shape)
+print("Testing set shape:", X_test.shape)
+
+#Create the decision tree classifier
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
+
+#Train the Classifier
+clf.fit(X_train, y_train)
+
+#Create Decision Tree Classifier
+clf = DecisionTreeClassifier()
+
+#Train the Classifier
+clf.fit(X_train, y_train)
+
+#Make predictions on the test set
+y_pred = clf.predict(X_test)
+
+#Print predictions
+print("Predictions:", y_pred)
+print("Actual values:", y_test.values)
+
+#Calculate accuracy
+accuracy = metrics.accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+
+#Display confusion matrix
+conf_matrix = metrics.confusion_matrix(y_test, y_pred)
+sns.heatmap(conf_matrix, annot = True, cmap = 'Blues', fmt = 'g')
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.show()
+
+#Classification report
+report = metrics.classification_report(y_test,y_pred,target_names = iris.target_names)
+print("Classification Report:\n", report)
+
+#Plotting the tree
+from sklearn import tree
+plt.figure(figsize = (12,8))
+tree.plot_tree(clf, filled = True, feature_names = iris.feature_names, class_names = iris.target_names, rounded = True)
+plt.title('Decision Tree')
+plt.show()
+
+#Create Decision Tree with custom hyperparameters
+clf_tuned = DecisionTreeClassifier(criterion ='entropy', max_depth = 3, min_samples_split = 4)
+
+#Train model
+clf_tuned.fit(X_train, y_train)
+
+#Make predictions and evaluate
+y_pred_tuned = clf_tuned.predict(X_test)
+accuracy_tuned = metrics.accuracy_score(y_test, y_pred_tuned)
+print("Tuned Model Accuracy:", accuracy_tuned)
