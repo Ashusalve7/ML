@@ -1,0 +1,20 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+df = pd.read_csv('https://raw.githubusercontent.com/RupeshMohan/Linear_Regression/master/headbrain.csv')
+
+print(df.head())
+
+x = df['Head Size(cm^3)']
+y = df['Brain Weight(grams)']
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2,shuffle=True)
+
+print('X_train:',x_train.head())
+
+print('X_test:',x_test.head())
+
+print('Y_train:',y_train.head())
+
+print('Y_test:',y_test.head())
